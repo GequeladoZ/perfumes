@@ -100,4 +100,24 @@ function addToCart(id) {
   if (existing) {
     existing.qty++;
   } else {
-    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 })
+    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+  }
+
+  updateCartDisplay();
+}
+
+function clearCart() {
+  cart = [];
+  updateCartDisplay();
+}
+
+container.addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON') {
+    addToCart(parseInt(e.target.dataset.id));
+  }
+});
+
+clearBtn.addEventListener('click', clearCart);
+
+renderProducts();
+updateCartDisplay();
