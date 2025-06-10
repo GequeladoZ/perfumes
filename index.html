@@ -1,29 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loja de Perfumes - Natura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Natura Perfumes - Sua loja online</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
-    <h1>🌸 Loja de Perfumes Natura</h1>
-    <div id="cart">
-      🛒 Itens no carrinho: <span id="cart-count">0</span> |
-      Total: R$ <span id="cart-total">0.00</span>
-      <button id="clear-cart">Limpar Carrinho</button>
+    <div class="container">
+      <h1>Natura Perfumes</h1>
+      <nav>
+        <ul>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#carrinho">Carrinho (<span id="cart-count">0</span>)</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section id="products-container">
-      <!-- Produtos vão aparecer aqui via JavaScript -->
+    <section id="produtos" class="container">
+      <h2>Confira nossas novidades</h2>
+      <div id="products-container" class="products-grid"></div>
+    </section>
+
+    <section id="carrinho" class="container">
+      <h2>Seu Carrinho</h2>
+      <div class="cart-info">
+        <span>Itens: <strong id="cart-count">0</strong></span>
+        <span>Total: <strong>R$ <span id="cart-total">0.00</span></strong></span>
+        <button id="clear-cart">Limpar Carrinho</button>
+      </div>
+      <div id="cart-items"></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Loja Natura. Todos os direitos reservados.</p>
+    <div class="container">
+      <p>© 2025 Natura Perfumes - Todos os direitos reservados</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
