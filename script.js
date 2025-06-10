@@ -39,21 +39,22 @@ const products = [
 let cart = [];
 
 const container = document.getElementById('products-container');
-const countSpan = document.getElementById('cart-count');
+const countSpan = document.querySelectorAll('#cart-count');
 const totalSpan = document.getElementById('cart-total');
 const clearBtn = document.getElementById('clear-cart');
+const cartItemsDiv = document.getElementById('cart-items');
 
 function renderProducts() {
   products.forEach(p => {
     const div = document.createElement('div');
     div.className = 'product';
-div.innerHTML = 
+    div.innerHTML = `
       <img src="${p.img}" alt="${p.name}">
       <h2>${p.name}</h2>
       <p>${p.desc}</p>
       <div class="price">R$ ${p.price.toFixed(2)}</div>
       <button data-id="${p.id}">Adicionar ao carrinho</button>
-    ;
+    `;
     container.appendChild(div);
   });
 }
@@ -64,8 +65,29 @@ function updateCartDisplay() {
     items += item.qty;
     total += item.qty * item.price;
   });
-  countSpan.textContent = items;
+  // atualiza todos os spans de quantidade do carrinho (header e seção)
+  countSpan.forEach(span => span.textContent = items);
   totalSpan.textContent = total.toFixed(2);
+
+  renderCartItems();
+}
+
+function renderCartItems() {
+  cartItemsDiv.innerHTML = '';
+  if(cart.length === 0){
+    cartItemsDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
+    return;
+  }
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>Qtd: ${item.qty}</span>
+      <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
+    `;
+    cartItemsDiv.appendChild(div);
+  });
 }
 
 function addToCart(id) {
@@ -73,23 +95,4 @@ function addToCart(id) {
   const existing = cart.find(c => c.id === id);
   if (existing) {
     existing.qty++;
-  } else {
-    cart.push({ id, name: prod.name, price: prod.price, qty: 1 });
-  }
-  updateCartDisplay();
-}
-
-function clearCart() {
-  cart = [];
-  updateCartDisplay();
-}
-
-container.addEventListener('click', e => {
-  if (e.target.tagName === 'BUTTON') {
-    addToCart(parseInt(e.target.dataset.id));
-  }
-});
-clearBtn.addEventListener('click', clearCart);
-
-renderProducts();
-updateCartDisplay();
+ 
