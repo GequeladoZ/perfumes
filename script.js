@@ -39,7 +39,7 @@ const products = [
 let cart = [];
 
 const container = document.getElementById('products-container');
-const countSpan = document.querySelectorAll('#cart-count');
+const countSpans = document.querySelectorAll('#cart-count');
 const totalSpan = document.getElementById('cart-total');
 const clearBtn = document.getElementById('clear-cart');
 const cartItemsDiv = document.getElementById('cart-items');
@@ -60,30 +60,33 @@ function renderProducts() {
 }
 
 function updateCartDisplay() {
-  let total = 0, items = 0;
+  let total = 0;
+  let items = 0;
+
   cart.forEach(item => {
     items += item.qty;
     total += item.qty * item.price;
   });
-  // atualiza todos os spans de quantidade do carrinho (header e seção)
-  countSpan.forEach(span => span.textContent = items);
-  totalSpan.textContent = total.toFixed(2);
 
+  countSpans.forEach(span => span.textContent = items);
+  totalSpan.textContent = total.toFixed(2);
   renderCartItems();
 }
 
 function renderCartItems() {
   cartItemsDiv.innerHTML = '';
-  if(cart.length === 0){
+
+  if (cart.length === 0) {
     cartItemsDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
     return;
   }
+
   cart.forEach(item => {
     const div = document.createElement('div');
     div.className = 'cart-item';
     div.innerHTML = `
-      <span>${item.name}</span>
-      <span>Qtd: ${item.qty}</span>
+      <span>${item.name}</span> - 
+      <span>Qtd: ${item.qty}</span> - 
       <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
     `;
     cartItemsDiv.appendChild(div);
@@ -91,8 +94,10 @@ function renderCartItems() {
 }
 
 function addToCart(id) {
-  const prod = products.find(p => p.id === id);
+  const product = products.find(p => p.id === id);
   const existing = cart.find(c => c.id === id);
+
   if (existing) {
     existing.qty++;
- 
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 })
