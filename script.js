@@ -39,7 +39,7 @@ const products = [
 let cart = [];
 
 const container = document.getElementById('products-container');
-const countSpans = document.querySelectorAll('#cart-count');
+const countSpan = document.getElementById('cart-count');
 const totalSpan = document.getElementById('cart-total');
 const clearBtn = document.getElementById('clear-cart');
 const cartItemsDiv = document.getElementById('cart-items');
@@ -50,7 +50,7 @@ function renderProducts() {
     const div = document.createElement('div');
     div.className = 'product';
     div.innerHTML = `
-      <img src="${p.img}" alt="${p.name}">
+      <img src="${p.img}" alt="${p.name}" />
       <h2>${p.name}</h2>
       <p>${p.desc}</p>
       <div class="price">R$ ${p.price.toFixed(2)}</div>
@@ -66,11 +66,12 @@ function updateCartDisplay() {
 
   cart.forEach(item => {
     items += item.qty;
-    total += item.qty * item.price;
+    total += item.price * item.qty;
   });
 
-  countSpans.forEach(span => span.textContent = items);
+  countSpan.textContent = items;
   totalSpan.textContent = total.toFixed(2);
+
   renderCartItems();
 }
 
@@ -96,10 +97,11 @@ function renderCartItems() {
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
-  const existing = cart.find(c => c.id === id);
+  if (!product) return;
 
-  if (existing) {
-    existing.qty++;
+  const itemInCart = cart.find(item => item.id === id);
+  if (itemInCart) {
+    itemInCart.qty++;
   } else {
     cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
   }
@@ -114,7 +116,8 @@ function clearCart() {
 
 container.addEventListener('click', e => {
   if (e.target.tagName === 'BUTTON') {
-    addToCart(parseInt(e.target.dataset.id));
+    const id = parseInt(e.target.dataset.id);
+    addToCart(id);
   }
 });
 
