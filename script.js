@@ -1,3 +1,4 @@
+// Definição dos produtos
 const products = [
   {
     id: 1,
@@ -36,88 +37,65 @@ const products = [
   }
 ];
 
-let cart = [];
-
-const container = document.getElementById('products-container');
-const countSpans = document.querySelectorAll('#cart-count');
-const totalSpan = document.getElementById('cart-total');
-const clearBtn = document.getElementById('clear-cart');
-const cartItemsDiv = document.getElementById('cart-items');
-
+// Função para renderizar os produtos na página
 function renderProducts() {
-  products.forEach(p => {
+  const container = document.getElementById('products-container');
+  products.forEach(product => {
     const div = document.createElement('div');
     div.className = 'product';
     div.innerHTML = `
-      <img src="${p.img}" alt="${p.name}">
-      <h2>${p.name}</h2>
-      <p>${p.desc}</p>
-      <div class="price">R$ ${p.price.toFixed(2)}</div>
-      <button data-id="${p.id}">Adicionar ao carrinho</button>
+      <img src="${product.img}" alt="${product.name}">
+      <h2>${product.name}</h2>
+      <p>${product.desc}</p>
+      <div class="price">R$ ${product.price.toFixed(2)}</div>
+      <button data-id="${product.id}">Adicionar ao carrinho</button>
     `;
     container.appendChild(div);
   });
 }
 
+// Função para atualizar o carrinho
 function updateCartDisplay() {
-  let total = 0;
-  let items = 0;
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
+  const cartTotal = cart.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2);
 
-  cart.forEach(item => {
-    items += item.qty;
-    total += item.qty * item.price;
-  });
-
-  countSpans.forEach(span => span.textContent = items);
-  totalSpan.textContent = total.toFixed(2);
-  renderCartItems();
+  document.getElementById('cart-count').textContent = cartCount;
+  document.getElementById('cart-total').textContent = cartTotal;
 }
 
-function renderCartItems() {
-  cartItemsDiv.innerHTML = '';
-
-  if (cart.length === 0) {
-    cartItemsDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
-    return;
-  }
-
-  cart.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'cart-item';
-    div.innerHTML = `
-      <span>${item.name}</span> - 
-      <span>Qtd: ${item.qty}</span> - 
-      <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
-    `;
-    cartItemsDiv.appendChild(div);
-  });
-}
-
+// Função para adicionar um produto ao carrinho
 function addToCart(id) {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const product = products.find(p => p.id === id);
-  const existing = cart.find(c => c.id === id);
+  const existingProduct = cart.find(p => p.id === id);
 
-  if (existing) {
-    existing.qty++;
+  if (existingProduct) {
+    existingProduct.qty++;
   } else {
-    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+    cart.push({ ...product, qty: 1 });
   }
 
+  localStorage.setItem('cart', JSON.stringify(cart));
   updateCartDisplay();
 }
 
+// Função para limpar o carrinho
 function clearCart() {
-  cart = [];
+  localStorage.removeItem('cart');
   updateCartDisplay();
 }
 
-container.addEventListener('click', e => {
+// Evento de clique nos botões de adicionar ao carrinho
+document.getElementById('products-container').addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON') {
     addToCart(parseInt(e.target.dataset.id));
   }
 });
 
-clearBtn.addEventListener('click', clearCart);
+// Evento de clique no botão de limpar carrinho
+document.getElementById('clear-cart').addEventListener('click', clearCart);
 
+// Inicialização
 renderProducts();
 updateCartDisplay();
