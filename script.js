@@ -4,35 +4,35 @@ const products = [
     name: 'Luna Intense',
     desc: 'Perfume feminino floral frutado, ideal para noites especiais.',
     price: 239.90,
-    img: 'https://via.placeholder.com/240x280?text=Luna+Intense'
+    img: 'https://imgnatura.vtexassets.com/arquivos/ids/166588-800-auto?v=637861212992130000&width=800&height=auto&aspect=true'
   },
   {
     id: 2,
     name: 'Essencial Feminino',
     desc: 'Notas de jasmim, violeta e pitanga. Sofisticação em cada gota.',
     price: 199.90,
-    img: 'https://via.placeholder.com/240x280?text=Essencial+Feminino'
+    img: 'https://imgnatura.vtexassets.com/arquivos/ids/167179-800-auto?v=637867110224200000&width=800&height=auto&aspect=true'
   },
   {
     id: 3,
     name: 'Kaiak Feminino',
     desc: 'Aroma fresco, vibrante, cítrico e floral.',
     price: 179.90,
-    img: 'https://via.placeholder.com/240x280?text=Kaiak+Feminino'
+    img: 'https://imgnatura.vtexassets.com/arquivos/ids/167077-800-auto?v=637864265960130000&width=800&height=auto&aspect=true'
   },
   {
     id: 4,
     name: 'Ilía Deo Parfum',
     desc: 'Frutas vermelhas, musk e baunilha suave.',
     price: 209.90,
-    img: 'https://via.placeholder.com/240x280?text=Ilia+Deo+Parfum'
+    img: 'https://imgnatura.vtexassets.com/arquivos/ids/165673-800-auto?v=637852999823500000&width=800&height=auto&aspect=true'
   },
   {
     id: 5,
     name: 'Kriska Drama',
     desc: 'Doce, marcante, com baunilha e notas intensas.',
     price: 149.90,
-    img: 'https://via.placeholder.com/240x280?text=Kriska+Drama'
+    img: 'https://imgnatura.vtexassets.com/arquivos/ids/164813-800-auto?v=637834253530370000&width=800&height=auto&aspect=true'
   }
 ];
 
