@@ -1,101 +1,124 @@
-// Definição dos produtos
 const products = [
   {
     id: 1,
     name: 'Luna Intense',
     desc: 'Perfume feminino floral frutado, ideal para noites especiais.',
     price: 239.90,
-    img: 'https://imgnatura.vtexassets.com/arquivos/ids/166588-800-auto?v=637861212992130000'
+    img: 'https://via.placeholder.com/240x280?text=Luna+Intense'
   },
   {
     id: 2,
     name: 'Essencial Feminino',
     desc: 'Notas de jasmim, violeta e pitanga. Sofisticação em cada gota.',
     price: 199.90,
-    img: 'https://imgnatura.vtexassets.com/arquivos/ids/167179-800-auto?v=637867110224200000'
+    img: 'https://via.placeholder.com/240x280?text=Essencial+Feminino'
   },
   {
     id: 3,
     name: 'Kaiak Feminino',
     desc: 'Aroma fresco, vibrante, cítrico e floral.',
     price: 179.90,
-    img: 'https://imgnatura.vtexassets.com/arquivos/ids/167077-800-auto?v=637864265960130000'
+    img: 'https://via.placeholder.com/240x280?text=Kaiak+Feminino'
   },
   {
     id: 4,
     name: 'Ilía Deo Parfum',
     desc: 'Frutas vermelhas, musk e baunilha suave.',
     price: 209.90,
-    img: 'https://imgnatura.vtexassets.com/arquivos/ids/165673-800-auto?v=637852999823500000'
+    img: 'https://via.placeholder.com/240x280?text=Ilía+Deo+Parfum'
   },
   {
     id: 5,
     name: 'Kriska Drama',
     desc: 'Doce, marcante, com baunilha e notas intensas.',
     price: 149.90,
-    img: 'https://imgnatura.vtexassets.com/arquivos/ids/164813-800-auto?v=637834253530370000'
+    img: 'https://via.placeholder.com/240x280?text=Kriska+Drama'
   }
 ];
 
-// Função para renderizar os produtos na página
+let cart = [];
+
+const container = document.getElementById('products-container');
+const countSpans = document.querySelectorAll('#cart-count');
+const totalSpan = document.getElementById('cart-total');
+const clearBtn = document.getElementById('clear-cart');
+const cartItemsDiv = document.getElementById('cart-items');
+
 function renderProducts() {
-  const container = document.getElementById('products-container');
-  products.forEach(product => {
+  container.innerHTML = '';
+  products.forEach(p => {
     const div = document.createElement('div');
     div.className = 'product';
     div.innerHTML = `
-      <img src="${product.img}" alt="${product.name}">
-      <h2>${product.name}</h2>
-      <p>${product.desc}</p>
-      <div class="price">R$ ${product.price.toFixed(2)}</div>
-      <button data-id="${product.id}">Adicionar ao carrinho</button>
+      <img src="${p.img}" alt="${p.name}">
+      <h2>${p.name}</h2>
+      <p>${p.desc}</p>
+      <div class="price">R$ ${p.price.toFixed(2)}</div>
+      <button data-id="${p.id}">Adicionar ao carrinho</button>
     `;
     container.appendChild(div);
   });
 }
 
-// Função para atualizar o carrinho
 function updateCartDisplay() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
-  const cartTotal = cart.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2);
+  let total = 0;
+  let items = 0;
 
-  document.getElementById('cart-count').textContent = cartCount;
-  document.getElementById('cart-total').textContent = cartTotal;
+  cart.forEach(item => {
+    items += item.qty;
+    total += item.qty * item.price;
+  });
+
+  countSpans.forEach(span => span.textContent = items);
+  totalSpan.textContent = total.toFixed(2);
+  renderCartItems();
 }
 
-// Função para adicionar um produto ao carrinho
-function addToCart(id) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const product = products.find(p => p.id === id);
-  const existingProduct = cart.find(p => p.id === id);
+function renderCartItems() {
+  cartItemsDiv.innerHTML = '';
 
-  if (existingProduct) {
-    existingProduct.qty++;
-  } else {
-    cart.push({ ...product, qty: 1 });
+  if (cart.length === 0) {
+    cartItemsDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
+    return;
   }
 
-  localStorage.setItem('cart', JSON.stringify(cart));
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>Qtd: ${item.qty}</span>
+      <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
+    `;
+    cartItemsDiv.appendChild(div);
+  });
+}
+
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+  }
+
   updateCartDisplay();
 }
 
-// Função para limpar o carrinho
 function clearCart() {
-  localStorage.removeItem('cart');
+  cart = [];
   updateCartDisplay();
 }
 
-// Evento de clique nos botões de adicionar ao carrinho
-document.getElementById('products-container').addEventListener('click', (e) => {
+container.addEventListener('click', e => {
   if (e.target.tagName === 'BUTTON') {
     addToCart(parseInt(e.target.dataset.id));
   }
 });
 
-// Evento de clique no botão de limpar carrinho
-document.getElementById('clear-cart').addEventListener('click', clearCart);
+clearBtn.addEventListener('click', clearCart);
 
-// Inicialização
 renderProducts();
 updateCartDisplay();
