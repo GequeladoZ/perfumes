@@ -2,43 +2,42 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loja de Perfumes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loja de Perfumes Natura</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="container">
-      <h1>Loja de Perfumes</h1>
+      <h1>Loja de Perfumes Natura</h1>
       <nav>
         <ul>
           <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#carrinho">Carrinho</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section class="cart-info">
-      <div>
-        🛒 Itens no carrinho: <span id="cart-count">0</span> |
-        Total: R$ <span id="cart-total">0.00</span>
-      </div>
-      <button id="clear-cart">Limpar Carrinho</button>
-    </section>
-
     <section id="produtos">
       <h2>Produtos</h2>
       <div id="products-container" class="products-grid"></div>
     </section>
 
-    <section id="cart-items">
-      <!-- Itens do carrinho serão adicionados aqui -->
+    <section id="carrinho">
+      <h2>Carrinho de Compras</h2>
+      <div class="cart-info">
+        Itens no carrinho: <span id="cart-count">0</span> |
+        Total: R$ <span id="cart-total">0.00</span>
+        <button id="clear-cart">Limpar Carrinho</button>
+      </div>
+      <div id="cart-items"></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Loja de Perfumes. Todos os direitos reservados.</p>
+    <p>&copy; 2025 Loja de Perfumes Natura. Todos os direitos reservados.</p>
   </footer>
 
   <script src="script.js"></script>
