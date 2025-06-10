@@ -1,3 +1,4 @@
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -6,102 +7,127 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background: #fff7f0;
+  background: #fffaf5;
   color: #333;
+  line-height: 1.6;
 }
 
 .container {
   max-width: 1100px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
 }
 
+/* Cabeçalho */
 header {
   background-color: #bc6c25;
   color: white;
   padding: 20px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 header h1 {
-  margin-left: 20px;
+  font-size: 1.8rem;
 }
 
-header nav ul {
+nav ul {
   list-style: none;
   display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
+  gap: 20px;
 }
 
-header nav ul li {
-  margin-left: 30px;
-}
-
-header nav ul li a {
+nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.2s ease;
 }
 
+nav ul li a:hover {
+  color: #ffddaa;
+}
+
+/* Produtos */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
-  margin-top: 25px;
+  gap: 25px;
+  margin-top: 20px;
 }
 
 .product {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(188, 108, 37, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 15px;
   text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.product:hover {
+  transform: scale(1.02);
 }
 
 .product img {
   width: 100%;
   height: 280px;
   object-fit: contain;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.product h2 {
-  font-size: 1.2rem;
-  color: #bc6c25;
+  border-radius: 6px;
   margin-bottom: 10px;
 }
 
+.product h2 {
+  font-size: 1.1rem;
+  color: #bc6c25;
+  margin-bottom: 8px;
+}
+
 .product p {
-  font-size: 0.95rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: #555;
   margin-bottom: 12px;
   min-height: 55px;
 }
 
 .price {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: bold;
   color: #bc6c25;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .product button {
   background-color: #bc6c25;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 30px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
+.product button:hover {
+  background-color: #a2561e;
+}
+
+/* Carrinho */
 .cart-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  align-items: center;
+  background: #f6e9dd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
-  gap: 10px;
 }
 
 #clear-cart {
@@ -111,12 +137,39 @@ header nav ul li a {
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
+#clear-cart:hover {
+  background-color: #a2561e;
+}
+
+#cart-items {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.cart-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+/* Rodapé */
 footer {
   background-color: #bc6c25;
   color: white;
   text-align: center;
   padding: 15px 0;
   margin-top: 50px;
+  font-size: 0.9rem;
 }
